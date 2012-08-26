@@ -2,10 +2,11 @@
 
 def get_id_tiempos
   id_tiempo = {
-    5 => "infinitive",
-    6 => "gerund", 
-    7 => "participle",
-    8 => "past"
+    6 => "infinitive",
+    7 => "gerund", 
+    8 => "participle",
+    9 => "past"
+    10 => "third"
   }
 end
 
