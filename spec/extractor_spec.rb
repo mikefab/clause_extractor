@@ -1,4 +1,4 @@
-require '../lib/xxx'
+require 'clause_extractor'
 
 tenses = {
   "present perfect"     => ["have you seen", "you have seen", "you have not seen", "has there ever been"],
@@ -28,7 +28,6 @@ tenses.each do |tense, phrases|
         response = ClauseExtractor.get_clauses("#{p}").flatten.to_s
         response.should match(/#{p}/i)
         response.should match(/#{tense}/i)
-        
       end
     end
   end

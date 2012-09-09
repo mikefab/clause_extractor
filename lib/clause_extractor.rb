@@ -9,8 +9,7 @@ class ClauseExtractor
   @tense_regexes = {
 
     'third'      => {
-      "simple present"
-                                      => [
+      "simple present"                => [
                                             /\b(he|she|it)\s+search(s)?\b/i,                              #he arrives
                                             /\bsearch(s)?\s+(it|them|him|her|me|you|us)\b/i               #adapts it
                                          ]
