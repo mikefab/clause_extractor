@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'clause_extractor'
-  s.version     = '0.0.4'
-  s.date        = '2012-08-24'
+  s.version     = '0.0.6'
+  s.date        = '2012-09-08'
   s.summary     = "Identifies verb clauses in text and organizes by tense"
   s.description = "A simple hello world gem"
   s.authors     = ["Mike Fabrikant"]
