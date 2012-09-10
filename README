@@ -5,9 +5,11 @@ Usage in irb:
 
 ClauseExtractor.get_clauses("She would have grilled her. She had been grilling. I have gone.")
 
-Returns: tense:clause:word index range
+prints: tense:clause:word index range
 conditional perfect:she would have grilled:0..3
 past perfect progressive:she had been grilling:5..8
 present perfect:i have gone:9..11
 
+And returns:
+ {"conditional perfect:she would have grilled:0..3"=>0..3, "past perfect progressive:she had been grilling:5..8"=>5..8, "present perfect:i have gone:9..11"=>9..11}
  
