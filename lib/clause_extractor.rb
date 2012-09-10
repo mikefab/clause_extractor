@@ -34,6 +34,8 @@ class ClauseExtractor
     'gerund' => {
       "conditional perfect progressive" => [/\b(#{pronouns}\s+)*would\s+(not\s+)*have\s+(not\s+)*been\s+search/i], #I would have been searching
       "present perfect progressive"     => [/\b(#{pronouns}\s+)*([a-z]{1,4}'ve|have|has)(n't)*\s+(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*been\s+search/i],   #I have been searching
+      "past perfect progressive"     => [/\b(#{pronouns}\s+)*([a-z]{1,4}'d|had)(n't)*\s+(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*been\s+search/i],   #I have been searching, had he not been searching
+
       "conditional progressive"         => [/\b(#{pronouns}\s+)*(would|[a-z]{1,4}'d)\s+(not\s+)*be\s+search/i],   #I would be searching (I'd)
       "future progressive"              => [
                                             /\b((#{pronouns})\s+)*(will|[a-z]{1,4}'ll)\s+(not\s+)*be\s+search/i,
@@ -85,7 +87,6 @@ class ClauseExtractor
               regex_array.each do |regex|
                 regex = regex.to_s.gsub("search", "#{a[i]}")
                 phrase, list, ranges = scan_phrase(phrase, list, regex, a[i], tense, i, ranges)
-                
               end
             end
           end
@@ -95,7 +96,9 @@ class ClauseExtractor
     list.each do |k, v| 
      list.delete(k) unless ranges.include?(v)
     end
-    print "#{list}\n"
+    list.each do |k,v| 
+      print "#{k}\n"
+    end
     list
   end
   
@@ -105,7 +108,8 @@ class ClauseExtractor
        lo, hi = get_match_start_index(verb, match, index)
        ranges = prioritize_ranges(ranges, lo, hi,match)
        list[@tense_id["#{tense_label}"].to_s+":" + match.to_s + ":" + @verbs[verb].to_s] = (lo..hi) if @format.match(/audioverb/)
-       list["#{tense_label} :" + match.to_s + ":" + @verbs[verb].to_s] = (lo..hi) unless @format.match(/audioverb/)
+       list["#{tense_label}:" + match.to_s + ":" + (lo..hi).to_s] = (lo..hi) unless @format.match(/audioverb/)
+       #list["#{tense_label}:" + match.to_s] = (lo..hi) unless @format.match(/audioverb/)
      end
      return phrase, list, ranges
    end

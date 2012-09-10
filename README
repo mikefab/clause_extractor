@@ -1,0 +1,13 @@
+clause_extractor receives a string and returns an hash of tense names and verbal clauses. It was created specifically for use by Audioverb.com, a search engine of subtitles. clause_extractor does not sentencize, therefore only submit one sentence at a time. 
+
+Usage in irb: 
+1.9.3-p194 :008 > require "clause_extractor"
+
+ClauseExtractor.get_clauses("She would have grilled her. She had been grilling. I have gone.")
+
+Returns: tense:clause:word index range
+conditional perfect:she would have grilled:0..3
+past perfect progressive:she had been grilling:5..8
+present perfect:i have gone:9..11
+
+ 
