@@ -28,13 +28,13 @@ class ClauseExtractor
                                             /\bif\s+#{pronouns}\s+#{was_were}\s+(not\s+)*to\s+(not\s+)*search/i,   #if I were to arise
                                             /\bif\s+#{pronouns}\s+should(n't)*\s+(not\s+)*search/i                #If I should arise
                                          ],
-        "subjunctive present"         => [  /\bthat\s+#{pronouns}\s+(not\s+)*search/i],                       #that we arrive
+        "subjunctive present"         => [  /\bthat\s+#{pronouns}\s+(not\s+)*search/i],                           #that we arrive
 
-        "conditional simple"          => [  /\b(#{pronouns}\s+)*(would(n't)*|[a-z]{1,4}'d)(\s+not)*\s+search/i],    #I would arise, I wouldn't arise
+        "conditional simple"          => [  /\b(#{pronouns}\s+)*(would(n't)*|[a-z]{1,4}'d)(\s+not)*\s+search/i],  #I would arise, I wouldn't arise
 
-        "will-future"                 => [  /\b(#{pronouns}\s+)*(will|[a-z]{1,4}'ll)(\s+not)*\s+search/i],    #I'll arise
+        "will-future"                 => [  /\b(#{pronouns}\s+)*(will|[a-z]{1,4}'ll)(\s+not)*\s+search/i],        #I'll arise
 
-        "going to-future"             => [  /\b(#{pronouns}\s+)*#{to_be}\s+(not\s+)*going\s+to\s+search/i],   #they are going to cry 
+        "going to-future"             => [  /\b(#{pronouns}\s+)*#{to_be}\s+(not\s+)*going\s+to\s+search/i],       #they are going to cry 
                       }, 
     'gerund' => {
      "conditional perfect progressive" => [ /\b(#{pronouns}\s+)*would\s+(not\s+)*have\s+(not\s+)*been\s+search/i], #I would have been searching
@@ -52,21 +52,24 @@ class ClauseExtractor
       "future progressive"              => [
                                             /\b((#{pronouns})\s+)*#{will}\s+(not\s+)*be\s+search/i,
                                             /\bwill\s+(#{pronouns}\s+)(not\s+)*be\s+search/i,
-                                          ],                                                                      #I will be searching
-      "past progressive"                => [/\b(#{pronouns}\s+)*#{was_were}*\s+(not\s+)*search/i],            #I was searching                                         
+                                          ],                                                          #I will be searching
+      "past progressive"                => [/\b(#{pronouns}\s+)*#{was_were}*\s+(not\s+)*search/i],    #I was searching                                         
 
       "present progressive"             => [/\b(#{pronouns}\s*)*(#{to_be}\s+)*(not\s+)*search/i],      #I'm rising
                 },
     "past-participle" => {
       "conditional perfect"             => [/\b(#{pronouns}\s+)*#{would}\s+(not\s+)*have\s+(not\s+)*search/i],                                 #I would not search      
       "future perfect"                  => [/\b(#{pronouns}\s+)*#{will}\s+have\s+search/i],            #I'll have arisen      
-      "past perfect"                    => [/\b(#{pronouns}\s+)*#{had}\s+(#{pronouns}\s+)*(not\s+)*((#{present_perfect})\s+)*search/i],  #I had arisen
+      "past perfect"                    => [
+                                              /\b(#{pronouns}\s+)*#{had}\s+(not\s+)*((#{present_perfect})\s+)*search/i,  #I had arisen
+                                              /\b#{had}\s+(#{pronouns}\s+)*(not\s+)*((#{present_perfect})\s+)*search/i
+                                           ],    
       "present perfect"                 => [
                                             /\b(#{pronouns}\s+)*#{have_has}\s+((#{present_perfect})\s+)*search/,             #They have already seen 
-                                            /\b#{have_has}\s+(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*search/        #Have they already seen
-                                          ],
-      "subjunctive past"                => [/\bif\s+(i|you|he|she|it|they|we)\s+search/i],                          #if I arose 
-      "simple past"                     => [/\b#{pronouns}\s+search/i]                                              #you chose
+                                            /\b#{have_has}\s+(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*search/       #Have they already seen
+                                           ],
+      "subjunctive past"                => [/\bif\s+#{pronouns}\s+search/i],                          #if I arose 
+      "simple past"                     => [/\b#{pronouns}\s+search/i]                                #you chose
     },     
     #"present perfect"             => [/^\s*search\b/i],                                        #arisen 
     #"simple past"                 => [/^\s*search\b/i]                                          #arose
