@@ -46,7 +46,7 @@ class ClauseExtractor
                                             /\b(#{pronouns}\s+)*#{had}\s(not\s+)*(#{present_perfect}\s+)*been\s+search/i, #I had been searching, 
                                             /\bhad(n't)*\s+(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*been\s+search/i, #had he not been searching
                                             
-                                          ],   #I had been searching, had he not been searching
+                                          ],
 
       "conditional progressive"         => [/\b(#{pronouns}\s+)*#{would}\s+(not\s+)*be\s+search/i],   #I would be searching (I'd)
       "future progressive"              => [
@@ -109,8 +109,8 @@ class ClauseExtractor
             end
           end
         end
-      end #end if is conjugation
-    end#end of looping through each cap
+      end
+    end
     list.each do |k, v| 
      list.delete(k) unless ranges.include?(v)
     end
