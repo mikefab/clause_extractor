@@ -8,9 +8,10 @@ class ClauseExtractor
   had             = "([a-z]{1,4}'d|had)(n't)*"
   have_has        = "(have|has|haven't|hasn't|havent|hasnt|has not|have not)"
   contractions    = "(it'*s|he'*s|she'*s|[a-z]{1,4}'*ve)"
+  should          = "should(n't)*"
   to_be           = "(am|are|'m|'re|'s|is|[a-z]{1,4}'re)"
-  will            = "(will|[a-z]{1,4}'ll)"
-  would           = "(would|[a-z]{1,4}'d)"
+  will            = "(will|won't|[a-z]{1,4}'ll)"
+  would           = "(would(n't)*|[a-z]{1,4}'d)"
  
   @tense_regexes = {
 
@@ -26,18 +27,18 @@ class ClauseExtractor
       
         "subjunctive future"          => [
                                             /\bif\s+#{pronouns}\s+#{was_were}\s+(not\s+)*to\s+(not\s+)*search/i,   #if I were to arise
-                                            /\bif\s+#{pronouns}\s+should(n't)*\s+(not\s+)*search/i                #If I should arise
+                                            /\bif\s+#{pronouns}\s+#{should}\s+(not\s+)*search/i                #If I should arise
                                          ],
         "subjunctive present"         => [  /\bthat\s+#{pronouns}\s+(not\s+)*search/i],                           #that we arrive
 
-        "conditional simple"          => [  /\b(#{pronouns}\s+)*(would(n't)*|[a-z]{1,4}'d)(\s+not)*\s+search/i],  #I would arise, I wouldn't arise
+        "conditional simple"          => [  /\b(#{pronouns}\s+)*#{would}(\s+not)*\s+search/i],  #I would arise, I wouldn't arise
 
-        "will-future"                 => [  /\b(#{pronouns}\s+)*(will|[a-z]{1,4}'ll)(\s+not)*\s+search/i],        #I'll arise
+        "will-future"                 => [  /\b(#{pronouns}\s+)*#{will}(\s+not)*\s+search/i],        #I'll arise
 
         "going to-future"             => [  /\b(#{pronouns}\s+)*#{to_be}\s+(not\s+)*going\s+to\s+search/i],       #they are going to cry 
                       }, 
     'gerund' => {
-     "conditional perfect progressive" => [ /\b(#{pronouns}\s+)*would\s+(not\s+)*have\s+(not\s+)*been\s+search/i], #I would have been searching
+     "conditional perfect progressive" => [ /\b(#{pronouns}\s+)*#{would}\s+(not\s+)*have\s+(not\s+)*been\s+search/i], #I would have been searching
       "present perfect progressive"     => [
                                             /\b(#{have_has}\s+)(#{pronouns}\s+)*(not\s+)*(#{present_perfect}\s+)*been\s+search/i, #have they not been searching
                                             /\b(#{pronouns}\s+)*#{have_has}*\s+(not\s+)*(#{present_perfect}\s+)*been\s+search/i   #I have been searching
@@ -51,7 +52,7 @@ class ClauseExtractor
       "conditional progressive"         => [/\b(#{pronouns}\s+)*#{would}\s+(not\s+)*be\s+search/i],   #I would be searching (I'd)
       "future progressive"              => [
                                             /\b((#{pronouns})\s+)*#{will}\s+(not\s+)*be\s+search/i,
-                                            /\bwill\s+(#{pronouns}\s+)(not\s+)*be\s+search/i,
+                                            /\b#{will}\s+(#{pronouns}\s+)(not\s+)*be\s+search/i,
                                           ],                                                          #I will be searching
       "past progressive"                => [/\b(#{pronouns}\s+)*#{was_were}*\s+(not\s+)*search/i],    #I was searching                                         
 
