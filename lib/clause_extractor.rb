@@ -1,15 +1,6 @@
 class ClauseExtractor
   require "conjugations" 
   require "matchers"
-    
-  def self.get_match_start_index(verb, match, index)
-    #get start position of last occurence of verb in match
-    verb_index_in_match = match.index /#{verb}(?!.*#{verb})/i
-    #count spaces between match start and verb_index_in_match and subtract that from index
-    lo = index - match[0,verb_index_in_match].split(/\s+/).size  
-    hi = lo + match[0,verb_index_in_match].split(/\s+/).size
-    return lo, hi
-  end
   
   def self.get_clauses(phrase, format = String.new, verbs=nil, tiempo=nil, id_tiempo=nil, tense_id=nil, con_id=nil)     
     @format        = format 
@@ -22,7 +13,7 @@ class ClauseExtractor
     @tense_id     ||= get_tenses
     @con_id       ||= get_con_id
     ranges       = []
-    a=Array.new
+
     a = phrase.split(/\s+/) 
     a.length.times do |i|
       a[i].gsub!(/[!.?\(\)]/,"") if a[i] #remove any punctuation from the word 
@@ -38,16 +29,21 @@ class ClauseExtractor
           end
         end
       end
-    end
-    list.each do |k, v| 
-     list.delete(k) unless ranges.include?(v)
-    end
-    list.each do |k,v| 
-      print "#{k}\n"
-    end
+    end    
+    list.each { |k, v| list.delete(k) unless ranges.include?(v) }
+    list.each { |k, v| print "#{k}\n" }    
     list
   end
   
+  def self.get_match_start_index(verb, match, index)
+    #get start position of last occurence of verb in match
+    verb_index_in_match = match.index /#{verb}(?!.*#{verb})/i
+    #count spaces between match start and verb_index_in_match and subtract that from index
+    lo = index - match[0,verb_index_in_match].split(/\s+/).size  
+    hi = lo + match[0,verb_index_in_match].split(/\s+/).size
+    return lo, hi
+  end
+    
    def self.scan_phrase(phrase, list, regex, verb, tense_label, index, ranges)
      if match = phrase.match(/#{regex}/i)
        match = match.to_s
