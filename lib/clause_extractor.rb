@@ -14,10 +14,10 @@ class ClauseExtractor
     @con_id       ||= get_con_id
     ranges       = []
 
+    phrase.gsub!(/[!.?\(\)]/,"") if phrase
     phrase_a = phrase.split(/\s+/) 
     phrase_a.length.times do |i|
-      phrase_a[i].gsub!(/[!.?\(\)]/,"") if phrase_a[i] #remove any punctuation from the word 
-        if @con_id[phrase_a[i]] then  #if word matches a conjugation
+      if @con_id[phrase_a[i]] then  #if word matches a conjugation
         $tense_regexes.each do |k,v|
           if k.match(/#{@id_tiempo[@tiempos[phrase_a[i]]]}/)
             v.each do |tense, regex_array|
