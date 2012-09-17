@@ -122,7 +122,7 @@ class ClauseExtractor
        if @format.match(/audioverb/)
          list[@tense_id["#{tense_label}"].to_s+":" + match.to_s + ":" + @verbs[verb].to_s] = (lo..hi) 
        else
-         list["#{tense_label}:" + match.to_s + ":" + (lo..hi).to_s] = (lo..hi) unless @format.match(/audioverb/)
+         list["#{tense_label}:" + match.to_s + ":" + (lo..hi).to_s] = (lo..hi)
        end
      end
      return phrase, list, ranges
