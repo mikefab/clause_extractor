@@ -2,24 +2,25 @@ class ClauseExtractor
   require "conjugations" 
   require "matchers"
   
-  def self.get_clauses(phrase, format = String.new, verbs=nil, tiempo=nil, id_tiempo=nil, tense_id=nil, con_id=nil)     
+  def self.get_clauses(phrase, format = String.new)     
     @format        = format 
     phrase         = phrase.downcase
     #list           = format.match("audioverb") ? Hash.new : Array.new
     list           = Hash.new
-    verbs        ||= get_verbs
-    tiempos      ||= get_tiempos
-    id_tiempo    ||= get_id_tiempos
-    tense_id     ||= get_tenses
-    con_id       ||= get_con_id
+    @verbs        ||= get_verbs
+    @tiempos      ||= get_tiempos
+    @id_tiempo    ||= get_id_tiempos
+    @tense_id     ||= get_tenses
+    @con_id       ||= get_con_id
     ranges       = []
 
     phrase.gsub!(/[!.?\(\)]/,"") if phrase
     phrase_a = phrase.split(/\s+/) 
     phrase_a.length.times do |i|
-        if con_id[phrase_a[i]] then  #if word matches a conjugation
+    #  phrase_a[i].gsub!(/[!.?\(\)]/,"") if phrase_a[i] #remove any punctuation from the word 
+        if @con_id[phrase_a[i]] then  #if word matches a conjugation
         $tense_regexes.each do |k,v|
-          if k.match(/#{id_tiempo[tiempos[phrase_a[i]]]}/)
+          if k.match(/#{@id_tiempo[@tiempos[phrase_a[i]]]}/)
             v.each do |tense, regex_array|
               regex_array.each do |regex|
                 regex = regex.to_s.gsub("search", "#{phrase_a[i]}")
@@ -50,7 +51,7 @@ class ClauseExtractor
        lo, hi = get_match_start_index(verb, match, index)
        ranges = prioritize_ranges(ranges, lo, hi,match)
        if @format.match(/audioverb/)
-         list[tense_id["#{tense_label}"].to_s+":" + match.to_s + ":" + verbs[verb].to_s] = (lo..hi) 
+         list[@tense_id["#{tense_label}"].to_s+":" + match.to_s + ":" + @verbs[verb].to_s] = (lo..hi) 
        else
          list["#{tense_label}:" + match.to_s + ":" + (lo..hi).to_s] = (lo..hi)
        end
@@ -81,11 +82,11 @@ end
 # @conjugations = get_conjugations  
 #  @conjugations.each do |k,v|
 #    @con = v['con']
-#    con_id[@con]   = k  #id
+#    @con_id[@con]   = k  #id
 #    #print "'#{@con}' => #{k},\n"
 #    #print "'#{@con}' => #{v['verb_id']},\n"
 #    #print "'#{@con}' => #{v['tiempo_id']},\n"
-#    #tiempos[@con]  = v['tiempo_id']  #tiempo_id
-#    #verbs[@con]    = v['verb_id']  #verb_id
+#    #@tiempos[@con]  = v['tiempo_id']  #tiempo_id
+#    #@verbs[@con]    = v['verb_id']  #verb_id
 #  end
 
